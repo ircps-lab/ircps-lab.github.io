@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IR-CPS Lab — 인공지능, 임베디드 시스템, 통신·네트워크, 사이버보안을 융합하는 지능형 고신뢰 사이버물리시스템 연구실">
+  <meta name="theme-color" content="#071829">
+  <title>IR-CPS Lab | 지능형 고신뢰 사이버물리시스템 연구실</title>
+      <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"       rel="stylesheet">
+  <style>
+
+    :root { --navy:#071829; --navy2:#0c263d; --cyan:#55d6d1; --blue:#458ce5; --ink:#152a3b; --muted:#566b7e; --line:#e1e9ef; --bg:#f5f8fb; --white:#fff; --radius:18px; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:92px; }
+    body { margin:0; font-family: "NanumSquareNeo","Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; color:var(--ink); background:#fff; line-height:1.8; word-break:keep-all; }
+    a { color:inherit; text-decoration:none; }
+    button { font:inherit; }
+    .container { width:min(1160px, calc(100% - 48px)); margin:auto; }
+    .header { position:sticky; top:0; z-index:10; background:rgba(7,24,41,.95); backdrop-filter:blur(15px); border-bottom:1px solid rgba(255,255,255,.1); }
+    .header-inner { min-height:76px; display:flex; align-items:center; justify-content:space-between; gap:25px; }
+    .brand { display:flex; align-items:center; gap:13px; color:white; font-weight:800; letter-spacing:.01em; white-space:nowrap; }
+    .brand-icon { display:grid; place-items:center; width:42px; height:42px; border:1px solid rgba(85,214,209,.55); border-radius:12px; color:var(--cyan); font-weight:900; font-size:16px; letter-spacing:-.1em; }
+    .brand small { display:block; font-size:10px; font-weight:500; color:#a9becc; letter-spacing:.035em; margin-top:-4px; }
+    .nav { display:flex; gap:25px; align-items:center; }
+    .nav a { color:#d5e4ee; font-size:14px; font-weight:650; transition:color .2s; }
+    .nav a:hover,.nav a:focus-visible { color:var(--cyan); }
+    .menu-btn { display:none; color:#fff; background:transparent; border:1px solid #496174; border-radius:10px; padding:7px 12px; cursor:pointer; }
+    .lab-banner { background:#e6eef5; line-height:0; }
+    .lab-banner img { display:block; width:100%; height:auto; max-height:none; object-fit:contain; margin:0 auto; }
+    .lab-banner-caption { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .hero { position:relative; overflow:hidden; background: radial-gradient(ellipse at 78% 42%, #17486c 0%, transparent 43%),linear-gradient(118deg,#071829 8%,#0b2b42 71%,#0a3447 100%); color:white; }
+    .hero::after { content:""; position:absolute; width:540px; height:540px; right:-150px; top:70px; opacity:.18; border:1px solid #64d5da; border-radius:50%; box-shadow:0 0 0 65px rgba(85,214,209,.12),0 0 0 130px rgba(85,214,209,.1),0 0 0 195px rgba(85,214,209,.08); pointer-events:none; }
+    .hero-content { position:relative; z-index:1; padding:75px 0 83px; max-width:875px; }
+    .eyebrow { display:inline-flex; align-items:center; gap:9px; font-size:12px; letter-spacing:.15em; text-transform:uppercase; font-weight:800; color:var(--cyan); }
+    .eyebrow::before { content:""; width:21px; height:2px; background:currentColor; }
+    h1,h2,h3,p { margin-top:0; }
+    .hero h1 { margin:22px 0 18px; font-size:clamp(34px,5.5vw,65px); line-height:1.26; letter-spacing:-.055em; }
+    .hero h1 span { color:#82e7e1; }
+    .hero-en { margin:0 0 22px; color:#b9d2df; letter-spacing:.03em; font-size:clamp(14px,2vw,20px); font-weight:500; }
+    .hero-desc { max-width:750px; color:#d7e5ee; font-size:16px; line-height:1.95; }
+    .hero-actions { margin-top:34px; display:flex; gap:12px; flex-wrap:wrap; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; min-height:46px; padding:10px 20px; border-radius:10px; font-size:14px; font-weight:750; }
+    .btn-primary { background:var(--cyan); color:#072435; }
+    .btn-ghost { border:1px solid #87afbf; color:#fff; }
+    .section { padding:91px 0; }
+    .section.alt { background:var(--bg); }
+    .section-head { margin-bottom:34px; }
+    .section-head h2 { margin:11px 0 10px; font-size:clamp(27px,3.4vw,37px); letter-spacing:-.035em; line-height:1.35; }
+    .section-head p { color:var(--muted); max-width:820px; margin:0; font-size:15px; }
+    .lead { font-size:17px; line-height:2.05; color:#314b5d; }
+    .about-grid { display:grid; grid-template-columns:1.22fr .78fr; gap:42px; align-items:start; }
+    .about-grid p { margin-bottom:18px; }
+    .focus-panel { padding:28px; border-radius:var(--radius); background:linear-gradient(145deg,#0e324e,#081d31); color:#fff; box-shadow:0 14px 35px rgba(13,46,69,.13); }
+    .focus-panel h3 { font-size:17px; margin-bottom:15px; }
+    .focus-panel ul { list-style:none; padding:0; margin:0; }
+    .focus-panel li { display:flex; align-items:baseline; gap:10px; padding:11px 0; color:#d7e7ed; border-top:1px solid rgba(255,255,255,.12); font-size:14px; }
+    .focus-panel li::before { content:"◆"; color:var(--cyan); font-size:9px; }
+    .research-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+    .research-card { background:white; border:1px solid var(--line); border-radius:var(--radius); padding:27px 24px 24px; transition:transform .2s,box-shadow .2s; }
+    .research-card:hover { transform:translateY(-3px); box-shadow:0 14px 32px rgba(27,64,91,.08); }
+    .number { font-size:12px; font-weight:850; letter-spacing:.1em; color:#187e99; }
+    .research-card h3 { margin:11px 0 11px; font-size:19px; letter-spacing:-.03em; line-height:1.48; }
+    .research-card p { margin:0; color:var(--muted); font-size:14px; }
+    .research-card:last-child { grid-column:span 3; }
+    .details { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+    .detail { padding:25px 26px; background:#fff; border:1px solid var(--line); border-radius:var(--radius); }
+    .detail h3 { display:flex; align-items:center; gap:10px; font-size:17px; margin-bottom:12px; }
+    .detail h3::before { content:""; display:inline-block; width:7px; height:21px; background:var(--cyan); border-radius:8px; }
+    .detail p { color:var(--muted); margin:0; font-size:14px; }
+    .members { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+    .member { background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:30px 26px; }
+    .avatar { width:62px; height:62px; display:grid; place-items:center; border-radius:18px; background:#e4f4f4; color:#136e82; font-size:24px; font-weight:850; margin-bottom:20px; }
+    .member h3 { font-size:21px; margin-bottom:5px; }
+    .member-label { color:#238296; font-size:12px; font-weight:750; margin-bottom:14px; }
+    .member ul { margin:0; padding-left:19px; color:#566b7e; font-size:14px; }
+    .vision { background:linear-gradient(120deg,#0b2840,#0d4057); color:#fff; }
+    .vision .section-head p { color:#c6dce6; }
+    .vision-lead { max-width:890px; font-size:19px; line-height:2; color:#f0f7fb; margin:0; }
+    .tags { display:flex; flex-wrap:wrap; gap:9px; margin-top:28px; }
+    .tag { padding:7px 12px; border:1px solid rgba(151,218,226,.4); background:rgba(255,255,255,.045); border-radius:999px; color:#dff4f5; font-size:12px; }
+    footer { background:#061521; color:#b1c6d2; padding:35px 0; }
+    .footer-inner { display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:12px; }
+    footer strong { font-size:15px; color:#fff; }
+    .footer-sub { display:block; padding-top:3px; }
+        /* Faculty profile */
+    .faculty { background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:32px; margin-bottom:28px; box-shadow:0 12px 35px rgba(24,62,87,.05); }
+    .faculty-top { display:flex; gap:22px; align-items:center; padding-bottom:22px; border-bottom:1px solid var(--line); }
+    .faculty .avatar { flex-shrink:0; width:76px; height:76px; margin:0; background:#103b55; color:#76e4e0; font-size:19px; }
+    .faculty-heading h3 { margin:0 0 3px; font-size:27px; }
+    .faculty-heading .role { color:#16869a; font-weight:750; font-size:13px; margin:0; }
+    .faculty-sub { color:var(--muted); margin:5px 0 0; font-size:14px; }
+    .faculty-meta { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px 30px; margin:24px 0; }
+    .faculty-meta > div { min-width:0; }
+    .faculty-meta dt { color:#238296; font-size:12px; font-weight:800; margin-bottom:3px; }
+    .faculty-meta dd { margin:0; font-size:14px; line-height:1.8; overflow-wrap:anywhere; }
+    .faculty-meta a { color:#126f91; text-decoration:underline; text-underline-offset:3px; }
+    .faculty-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .faculty-panel { background:#f5f8fb; border:1px solid var(--line); border-radius:14px; padding:20px 21px; }
+    .faculty-panel h4 { margin:0 0 12px; font-size:16px; }
+    .faculty-panel ul { margin:0; padding-left:19px; color:#4f6576; font-size:13px; line-height:1.9; }
+    .faculty-panel li + li { margin-top:5px; }
+    .faculty-publications { margin-top:16px; }
+    .faculty-publications details { background:#f5f8fb; border:1px solid var(--line); border-radius:14px; margin-top:12px; overflow:hidden; }
+    .faculty-publications summary { cursor:pointer; padding:18px 21px; font-weight:800; color:#16394d; list-style-position:inside; }
+    .faculty-publications summary::marker { color:#178b9b; }
+    .faculty-publications details[open] summary { border-bottom:1px solid var(--line); }
+        .pub-list { list-style:none; margin:0; padding:6px 21px 18px; }
+    .pub-list li { padding:12px 0; border-bottom:1px solid #e0e8ee; }
+    .pub-list li:last-child { border-bottom:0; }
+    .pub-title { display:block; font-size:14px; font-weight:680; color:#1c3b51; line-height:1.65; overflow-wrap:anywhere; }
+    .pub-meta { display:block; margin-top:5px; color:#637b8c; font-size:12px; line-height:1.7; }
+    .member-group-title { margin:35px 0 16px; font-size:20px; }
+    @media(max-width:840px) { .about-grid { grid-template-columns:1fr; } .research-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .research-card:last-child { grid-column:span 2; } .members { grid-template-columns:1fr; } .hero-content { padding:65px 0; } }
+    @media(max-width:660px) { .container { width:min(100% - 36px,1160px); } .header-inner { min-height:68px; } .brand { font-size:14px; } .brand small { font-size:9px; } .menu-btn { display:block; } .nav { display:none; position:absolute; top:68px; left:0; right:0; padding:20px 18px 23px; background:#081b2b; border-bottom:1px solid #27445a; flex-direction:column; align-items:stretch; gap:16px; } .nav.open { display:flex; } .hero-content { padding:58px 0 65px; } .hero h1 { font-size:35px; } .hero-desc { font-size:15px; } .section { padding:68px 0; } .research-grid,.details { grid-template-columns:1fr; } .research-card:last-child { grid-column:auto; } .vision-lead { font-size:16px; } }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .research-card { transition:none; } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="IR-CPS Lab 홈">
+        <span class="brand-icon" aria-hidden="true">IR</span>
+        <span>IR-CPS Lab<small>Intelligent &amp; Resilient Cyber-Physical Systems</small></span>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" id="menu-btn">메뉴 ☰</button>
+      <nav class="nav" id="site-nav" aria-label="주요 메뉴">
+        <a href="#about">연구실 소개</a><a href="#research">연구 분야</a><a href="#activities">연구 내용</a><a href="#members">구성원</a><a href="#vision">연구 목표</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <figure class="lab-banner" aria-labelledby="banner-caption" style="margin:0">
+      <img src="IRCPS.png" width="1662" height="928" fetchpriority="high" alt="IR-CPS Lab 대표 이미지: AI, 자율주행차, 차량 통신, 센서 데이터, 침입탐지, 사이버보안과 회복탄력성을 표현한 연구실 소개 배너">
+      <figcaption id="banner-caption" class="lab-banner-caption">IR-CPS Lab — Intelligent and Resilient Cyber-Physical Systems</figcaption>
+    </figure>
+    
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="container hero-content">
+        <div class="eyebrow">IR-CPS Laboratory</div>
+        <h1 id="hero-title">지능형 <span>고신뢰</span><br>사이버물리시스템 연구실</h1>
+        <p class="hero-en">Intelligent &amp; Resilient Cyber-Physical Systems Laboratory</p>
+        <p class="hero-desc">인공지능, 소프트웨어, 임베디드 시스템, 통신·네트워크 및 사이버보안 기술을 융합하여 지능적이고 안전하며 신뢰성 높은 사이버물리시스템의 설계·개발 및 응용 기술을 연구합니다.</p>
+        <div class="hero-actions"><a class="btn btn-primary" href="#research">연구 분야 살펴보기</a>
+            <a class="btn btn-ghost" href="#members">연구실 구성원</a>
+            <a class="btn btn-primary" href="https://ce.daejin.ac.kr">대진대학교(컴퓨터공학과)</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section-head"><div class="eyebrow">About the Lab</div><h2 id="about-title">연구실 소개</h2><p>사이버 공간의 지능과 물리적 시스템의 안전·신뢰성을 연결합니다.</p></div>
+        <div class="about-grid">
+          <div class="lead">
+            <p><strong>지능형 고신뢰 사이버물리시스템 연구실(IR-CPS Lab)</strong>은 인공지능(AI), 소프트웨어, 임베디드 시스템, 통신·네트워크 및 사이버보안 기술을 융합하여 지능적이고 안전하며 신뢰성 높은 사이버물리시스템(Cyber-Physical Systems, CPS)의 설계·개발 및 응용 기술을 연구합니다.</p>
+            <p><strong>사이버물리시스템(CPS)</strong>은 센서와 제어장치 등으로 구성된 물리적 시스템과 컴퓨팅·통신 시스템이 긴밀하게 연계되어, 물리적 환경의 상태를 실시간으로 수집·분석하고 그 결과를 바탕으로 물리적 시스템을 감시하거나 제어하는 통합 시스템입니다.</p>
+            <p>CPS는 물리적 환경과 디지털 시스템 간의 상호작용을 통해 지능적인 의사결정과 자동화된 제어를 수행하며, 스마트 제조, 산업 자동화, 자율주행 및 스마트 인프라 등 다양한 분야에 적용됩니다.</p>
+          </div>
+          <aside class="focus-panel" aria-label="핵심 연구 키워드">
+            <h3>Core Research Keywords</h3>
+            <ul><li>AI 기반 이상탐지 및 고장 진단</li><li>산업 시계열 데이터 분석</li><li>지능형 임베디드·실시간 시스템</li><li>산업용·차량용 통신 기술</li><li>사이버 공격 분석 및 침입탐지</li><li>인증 및 접근제어</li><li>시스템 안전성 및 신뢰성</li></ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="research" aria-labelledby="research-title">
+      <div class="container">
+        <div class="section-head"><div class="eyebrow">Research Areas</div><h2 id="research-title">주요 연구 분야</h2><p>지능화·실시간 처리·통신·보안·신뢰성을 아우르는 융합 연구를 수행합니다.</p></div>
+        <div class="research-grid">
+          <article class="research-card"><div class="number">RESEARCH 01</div><h3>AI 기반 이상탐지 및 고장 진단</h3><p>산업 설비 및 차량 센서 데이터 분석, 이상탐지, 고장 진단 및 예측</p></article>
+          <article class="research-card"><div class="number">RESEARCH 02</div><h3>지능형 임베디드·실시간 시스템</h3><p>산업용·차량용 임베디드 소프트웨어, 실시간 데이터 처리</p></article>
+          <article class="research-card"><div class="number">RESEARCH 03</div><h3>산업용·차량용 통신</h3><p>산업용 네트워크, CAN·CAN FD·차량용 Ethernet 통신</p></article>
+          <article class="research-card"><div class="number">RESEARCH 04</div><h3>사이버 공격 분석 및 침입탐지</h3><p>산업 제어 시스템 및 차량 네트워크 공격 탐지, AI 기반 IDS</p></article>
+          <article class="research-card"><div class="number">RESEARCH 05</div><h3>인증 및 접근제어</h3><p>사용자·장치 인증, 차량 ECU 인증, 보안 통신</p></article>
+          <article class="research-card"><div class="number">RESEARCH 06</div><h3>시스템 안전성 및 신뢰성</h3><p>결함 탐지·복구, 기능 안전성, 시스템 검증 및 신뢰성 평가</p></article>
+          <article class="research-card"><div class="number">RESEARCH 07</div><h3>자율주행·커넥티드카 보안</h3><p>차량 네트워크 보안, 자율주행 시스템 이상탐지, 차량 사이버보안</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="activities" aria-labelledby="activities-title">
+      <div class="container">
+        <div class="section-head"><div class="eyebrow">Research Focus</div><h2 id="activities-title">중점 연구 내용</h2><p>실제 산업·차량 환경의 데이터와 시스템에 적용할 수 있는 기술을 연구합니다.</p></div>
+        <div class="details">
+          <article class="detail"><h3>데이터 기반 이상 상태 탐지 및 예측</h3><p>산업 설비와 자동차의 센서 및 전자제어장치(ECU)에서 수집되는 데이터를 분석하여 이상 상태를 탐지하고 고장 발생 가능성을 예측하며, 이를 소프트웨어와 임베디드 시스템에 적용합니다.</p></article>
+          <article class="detail"><h3>산업용 CPS 및 차량 네트워크 보안</h3><p>사이버 공격 및 비정상적인 통신 행위를 분석하고, 지능형 침입탐지와 사용자·장치 인증 기술을 통해 시스템의 보안성과 신뢰성을 강화합니다.</p></article>
+          <article class="detail"><h3>시스템 통합·검증 및 복구</h3><p>하드웨어, 소프트웨어 및 네트워크 간 상호작용을 고려한 시스템 통합과 오류·침입 탐지, 장애 복구 및 성능 검증 기술을 연구합니다.</p></article>
+          <article class="detail"><h3>차량 및 자율주행 시스템의 안전성</h3><p>차량용 임베디드 소프트웨어, CAN 기반 차량 내부 통신, 자율주행 및 커넥티드카의 사이버보안과 기능 안전성을 연구합니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="members" aria-labelledby="members-title">
+        <div class="container">
+            <div class="section-head">
+                <div class="eyebrow">Lab Members</div>
+                <h2 id="members-title">Research Lab Members</h2>
+                <p>
+                We explore intelligent Cyber-Physical Systems (CPS)
+                by integrating expertise from diverse research fields.
+                </p>
+            </div>
+
+        <article class="faculty" aria-labelledby="faculty-name">
+            <div class="faculty-top">
+            <div class="avatar" aria-hidden="true">Prof.</div>
+                <div class="faculty-heading">
+                    <p class="role">Professor · Lab Director</p>
+                    <h3 id="faculty-name">Youngmi BAEK</h3>
+                    <p class="faculty-sub">
+                    Department of Computer Engineering
+                    </p>
+                </div>
+            </div>
+
+            <dl class="faculty-meta">
+ 
+
+            <div>
+                <dt>Email</dt>
+                <dd>
+                <a href="mailto:ymbaek@daejin.ac.kr">
+                    ymbaek@daejin.ac.kr
+                </a>
+                </dd>
+            </div>
+
+            <div>
+                <dt>Major</dt>
+                <dd>
+                Network Architecture and Management · Computer Engineering
+                </dd>
+            </div>
+
+            <div style="grid-column:1/-1">
+                <dt>Research Interests</dt>
+                <dd>
+                Cyber-Physical Systems · Network Security ·
+                Industrial Security · Cyberattack and Anomaly Detection
+                </dd>
+            </div>
+            </dl>
+
+                <section class="faculty-panel" aria-labelledby="career-heading">
+                <h4 id="career-heading">Professional Experience</h4>
+                <ul>
+                    <li>
+                    Daejin University · Associate Professor
+                    (Mar. 2026– )
+                    </li>
+                    <li>
+                    Changshin University · Assistant Professor
+                    (Mar. 2020 – Feb. 2026)
+                    </li>
+                    <li>
+                    Daegu Gyeongbuk Institute of Science and Technology (DGIST) ·
+                    Research Professor (Feb. 2017 – Dec. 2019)
+                    </li>
+                    <li>
+                    Daegu Gyeongbuk Institute of Science and Technology (DGIST) ·
+                    Researcher (Jul. 2015 – Jan. 2017)
+                    </li>
+                    <li>
+                    POSTECH Information and Communication Research Institute ·
+                    Researcher
+                    </li>
+                    <li>
+                    Electronics and Telecommunications Research Institute (ETRI) ·
+                    Contract Researcher
+                    </li>
+                </ul>
+                </section>
+
+            <div class="faculty-publications">
+                <!-- Research Grants --(연구과제)-->
+                <details class="faculty-panel faculty-details">
+                <summary>
+                    Research Grants 
+                    <span>(Projects)</span>
+                </summary>
+
+                <ul>
+                    <li>
+                    <strong>2024</strong> · Principal Investigator<br>
+                    Challenge Lab (5C LAB)<br>
+                    Gyeongnam Regional Innovation Platform<br>
+                    <small>Funding: KRW 70,000,000</small>
+                    </li>
+
+                    <li>
+                    <strong>2023</strong> · Principal Investigator<br>
+                    Digital New Software AI Camp
+                    (X'23 CSU Winter Vacation Camp)<br>
+                    Ministry of Education<br>
+                    <small>Funding: KRW 1,394,000,000</small>
+                    </li>
+
+                    <li>
+                    <strong>2023.03.01 ~ 2024.02.29</strong> · Principal Investigator<br>
+                    Development of Chaotic Map-Based Vehicle Authentication
+                    Technique for High-Reliability Control<br>
+                    Changshin University<br>
+                    <small>Funding: KRW 1,000,000</small>
+                    </li>
+
+                    <li>
+                    <strong>2021.03.01 ~ 2022.02.28</strong> · Principal Investigator<br>
+                    Employment Stability Preemptive Response Package
+                    (Internet of Things and Robot Operator Course
+                    Professional Training)<br>
+                    Ministry of Employment and Labor<br>
+                    <small>Funding: KRW 143,135,000</small>
+                    </li>
+
+                    <li>
+                    <strong>2021.06.01 ~ 2024.02.29</strong> · Principal Investigator<br>
+                    Development of a Vehicle Internal Network Cybersecurity
+                    Platform to Ensure Control Reliability of Automotive
+                    Cyber-Physical Systems<br>
+                    Ministry of Science and ICT<br>
+                    <small>Funding: KRW 84,289,000</small>
+                    </li>
+
+                    <li>
+                    <strong>2022.04.01 ~ 2024.02.29</strong> · Principal Investigator<br>
+                    Development of a Load-Aware Access Mechanism for
+                    High-Capacity Data Transmission of Vehicle
+                    Cyber-Physical Systems<br>
+                    Changshin University<br>
+                    <small>Funding: KRW 1,000,000</small>
+                    </li>
+
+                    <li>
+                    <strong>2021.03.01 ~ 2022.02.28</strong> · Principal Investigator<br>
+                    Development of Cyber Attack Detection Technique for
+                    Vehicle Cyber-Physical Systems<br>
+                    Changshin University<br>
+                    <small>Funding: KRW 2,000,000</small>
+                    </li>
+
+                    <li>
+                    <strong>2020.05.01 ~ 2021.02.28</strong> · Principal Investigator<br>
+                    Development of a Low-Latency Transmission Technique
+                    for Driving Data to Ensure High Safety of Autonomous
+                    Platoon Driving<br>
+                    Changshin University<br>
+                    <small>Funding: KRW 2,000,000</small>
+                    </li>
+
+                    <li>
+                    <strong>2019.06.01 ~ 2022.05.31</strong> · Principal Investigator<br>
+                    Development of Low-Latency and High-Reliability
+                    Sensing Data Provision Technology Based on
+                    Cyber-Physical Systems for Safe Autonomous Platooning<br>
+                    National Research Foundation of Korea (NRF)<br>
+                    <small>Funding: KRW 146,666,000</small>
+                    </li>
+                </ul>
+                </details>
+
+
+                <!-- Awards and Honors --(수상 실적)-->
+                <details class="faculty-panel faculty-details">
+                <summary>
+                    Awards &amp; Honors 
+                    <span>(Awards)</span>
+                </summary>
+
+                <ul>
+                    <li>
+                    <strong>2023.11.06</strong><br>
+                    3rd Gyeongnam Software Competition<br>
+                    Encouragement Award (Runner-up)<br>
+                    <small>Student team guided</small>
+                    </li>
+
+                    <li>
+                    <strong>2022.11.18</strong><br>
+                    2nd Gyeongnam Software Competition<br>
+                    Encouragement Award (Runner-up)<br>
+                    <small>Student team guided</small>
+                    </li>
+
+                    <li>
+                    <strong>2021.10.29</strong><br>
+                    1st Gyeongnam SW Competition<br>
+                    Grand Prize<br>
+                    <small>Student team guided</small>
+                    </li>
+
+                    <li>
+                    <strong>2021.10.29</strong><br>
+                    Participation Prize<br>
+                    International Society of Next-Generation
+                    Convergence Technology
+                    </li>
+
+                    <li>
+                    <strong>2016.10.13</strong><br>
+                    Best Paper Award<br>
+                    IEEE Computer Society &amp; TCTRS<br>
+                    CPSNA 2016
+                    </li>
+
+                    <li>
+                    <strong>2016.05.27</strong><br>
+                    Outstanding Paper Presentation Award<br>
+                    Korean Society of Embedded Engineering
+                    </li>
+                </ul>
+                </details>
+                <!-- Community Cooperation and Service(대외협력 및 봉사) -->
+                <details class="faculty-panel faculty-details">
+                <summary>
+                    Community Cooperation &amp; Service
+                    
+                    <span>(Activities)</span>
+                </summary>
+
+                <ul>
+                    <li>
+                    <strong>2024</strong><br>
+                    Chairman, Changwon City Software Task
+                    Deliberation Committee
+                    </li>
+
+                    <li>
+                    <strong>2023</strong><br>
+                    Member, Changwon City Software Task
+                    Deliberation Committee
+                    </li>
+
+                    <li>
+                    <strong>2022</strong><br>
+                    Member, Changwon City Software Task
+                    Deliberation Committee
+                    </li>
+
+                    <li>
+                    <strong>2022</strong><br>
+                    Gyeongnam Region High School
+                    Major Experience Support<br>
+                    Masan High School,
+                    Jinhae Woongcheon High School
+                    </li>
+
+                    <li>
+                    <strong>2021</strong><br>
+                    Member, Technology Suitability Evaluation Committee<br>
+                    University Admission Comprehensive Support System
+                    Personal Information Impact Assessment Service
+                    </li>
+
+                    <li>
+                    <strong>2021</strong><br>
+                    Member, Selection Evaluation Committee<br>
+                    Gyeongnam 5G Utilization Next-Generation
+                    Communication Smart Factory Regulation-Free
+                    Special Zone Commercialization Support Project
+                    </li>
+
+                    <li>
+                    <strong>2021</strong><br>
+                    Evaluation Committee Member<br>
+                    NTS System Performance Improvement Project
+                    </li>
+
+                    <li>
+                    <strong>2018</strong><br>
+                    Evaluation Committee Member<br>
+                    Gyeongsangbuk-do Region Small and Medium-Sized
+                    Business Growth Roadmap Establishment
+                    Service Company Selection
+                    </li>
+
+                    <li>
+                    <strong>2017</strong><br>
+                    Executive Committee Member<br>
+                    Gyeongsangbuk-do 4th Industrial Revolution
+                    Strategy Committee
+                    </li>
+
+                    <li>
+                    <strong>2016</strong><br>
+                    Consulting Expert<br>
+                    Gyeongbuk Intellectual Property Rights
+                    Support Project
+                    </li>
+
+                    <li>
+                    <strong>2016</strong><br>
+                    Evaluation Committee Member<br>
+                    Prototype Production Support Project to
+                    Strengthen Smart Knowledge Service Quality
+                    </li>
+                </ul>
+                </details>
+                <details class="faculty-panel faculty-details">
+                <summary>
+                    Selected Publications 
+                    <span>from 2021</span>
+                </summary>
+            
+                <ol class="pub-list">
+                    <li><span class="pub-title">Mitigating Swap-Induced Tail Latency in LLM Serving through I/O-Aware Adaptation</span><span class="pub-meta">The Journal of Korean Institute of Communications and Information Sciences · 공동연구(제1저자) · 2026.08</span></li>
+                    <li><span class="pub-title">Robust Helmet-Based Worker Safety-State Recognition and Risk-Aware Decision Support for Industrial Safety Monitoring</span><span class="pub-meta">한국컴퓨터정보학회논문지 · 공동연구(제1저자) · 2026.07</span></li>
+                    <li><span class="pub-title">리눅스 파일시스템에 따른 Gemma 4 E2B 로컬 추론의 초기 구동 성능 분석</span><span class="pub-meta">사물인터넷융복합논문지 · 공동연구(제1저자) · 2026.06</span></li>
+                    <li><span class="pub-title">Data-Driven Defect Prediction for Manufacturing Quality Monitoring Under Class Imbalance and Missing Data: A Performance–Efficiency Trade-Off Analysis</span><span class="pub-meta">Machines (SCIE) · 공동연구(교신저자) · 2026.06</span></li>
+                    <li><span class="pub-title">A Comparative Analysis of Skill Design Types in OpenClaw-Based Korean Office Task Automation</span><span class="pub-meta">한국컴퓨터정보학회논문지 · 공동연구(제1저자) · 2026.06</span></li>
+                    <li><span class="pub-title">MARS Memory-Aware Metadata Management for Scalable Hadoop Systems</span><span class="pub-meta">WSEAS TRANSACTIONS on COMPUTER RESEARCH · 공동연구(제1저자) · 2026.02</span></li>
+                    <li><span class="pub-title">ALEX: Adaptive Log-Embedded Extent Layer for Low-Amplification SQLite Writes on Flash Storage</span><span class="pub-meta">Applied Sciences (SCIE) · 공동연구(제1저자) · 2026.01</span></li>
+                    <li><span class="pub-title">NVMe 기반 리눅스 파일시스템(ext4, XFS, Btrfs)의 성능 비교 분석 연구</span><span class="pub-meta">차세대융합기술학회논문지 · 공동연구(교신저자) · 2025.12</span></li>
+                    <li><span class="pub-title">대규모 시계열 데이터 마이그레이션을 위한 MongoDB와 InfluxDB 성능 비교 연구</span><span class="pub-meta">사물인터넷융복합논문지 · 공동연구(제1저자) · 2025.12</span></li>
+                    <li><span class="pub-title">모델 컨텍스트 프로토콜(MCP) 환경에서 퍼징 기반 보안 취약점 검출 방법</span><span class="pub-meta">사물인터넷융복합논문지 · 공동연구(교신저자) · 2025.10</span></li>
+                    <li><span class="pub-title">Fast Path Generation Algorithm for Mobile Robot Navigation Using Hybrid Map</span><span class="pub-meta">Applied Sciences (SCIE) · 공동연구(제1저자) · 2025.02</span></li>
+                    <li><span class="pub-title">Real-Time Adaptive and Lightweight Anomaly Detection Based on a Chaotic System in Cyber-Physical Systems</span><span class="pub-meta">Electronics (SCIE) · 공동연구(교신저자) · 2025.02</span></li>
+                    <li><span class="pub-title">Implementation of NDAS-based Large-Scale Storage Systems for Big Data</span><span class="pub-meta">국제차세대융합기술학회논문지 · 공동연구(교신저자) · 2024.12</span></li>
+                    <li><span class="pub-title">ECMAC: Edge-Assisted Cluster-Based MAC Protocol in Software-Defined Vehicular Networks</span><span class="pub-meta">IEEE Transactions on Vehicula Technology (SCIE) · 공동연구(참여) · 2024.04</span></li>
+                    <li><span class="pub-title">CANon: Lightweight and Practical Cyber-Attack Detection for Automotive Controller Area Networks</span><span class="pub-meta">Sensors (SCIE) · 공동연구(제1저자) · 2022.03</span></li>
+                    <li><span class="pub-title">Distributed Urban Platooning towards High Flexibility, Adaptability, and Stability</span><span class="pub-meta">Sensors (SCIE) · 공동연구(교신저자) · 2021.04</span></li>
+                </ol>
+                </details>
+            <details class="faculty-panel faculty-details">
+                <summary>
+                    Patents
+                    <span>from 2021</span>
+                </summary>
+
+                <ol class="pub-list">
+
+                    <li>
+                    <span class="pub-title">이종트래픽 혼잡 제어 시스템 및 제어 방법</span>
+                    <span class="pub-meta">특허 · 공동 · 2021.01</span>
+                    </li>
+                    <li>
+                    <span class="pub-title">가상 센서 이중화를 통한 차량 제어 방법 및 그 장치</span>
+                    <span class="pub-meta">산학협력 · 단독 · 2021.05</span>
+                    </li>
+                    <li>
+                    <span class="pub-title">도시도로를 위한 자율군집주행 관리 방법</span>
+                    <span class="pub-meta">산학협력 · 단독 · 2022.06</span>
+                    </li>
+                    <li>
+                    <span class="pub-title">연합 모니터링 시스템</span>
+                    <span class="pub-meta">산학협력 · 공동 · 2025.12</span>
+                    </li>
+                    <li>
+                    <span class="pub-title">사용자 정보 희소 환경에서 초기 개인화 컨텐츠의 제공 방법 및 시스템</span>
+                    <span class="pub-meta">산학협력 · 공동 · 2025.12</span>
+                    </li>
+                    <li>
+                    <span class="pub-title">센서 동작 이상 여부의 판단 방법</span>
+                    <span class="pub-meta">산학협력 · 공동 · 2025.12</span>
+                    </li>
+                    <li>
+                    <span class="pub-title">카오틱 암호화 기반의 데이터 인증 방법 및 시스템</span>
+                    <span class="pub-meta">산학협력 · 공동 · 2025.09</span>
+                    </li>
+                </ol>
+                </details>
+            <details class="faculty-panel faculty-details">
+                <summary>
+                    Conference Papers
+                    <span>from 2026</span>
+                </summary>
+                <ol class="pub-list">
+                    <li><span class="pub-title">Vision-Based Worker Safety-State Recognition and Safety-Aware Decision Support Using Helmet Detection</span><span class="pub-meta">2026 2nd AMLDS · 공동(교신) · 2026.07</span></li>
+                    <li><span class="pub-title">SNS 광고 텍스트의 소비심리 자극점수 측정 모델 및 프로그램 개발</span><span class="pub-meta">2026년 KIIS&amp;SDPM 공동학술대회논문집 · 공동(참여) · 2026.07</span></li>
+                    <li><span class="pub-title">예산 주도형 여행 AI 스케줄링 시스템의 설계 및 제안</span><span class="pub-meta">2026년 KIIS&amp;SDPM 공동학술대회논문집 · 공동(교신) · 2026.07</span></li>
+                    <li><span class="pub-title">비대면 배달 허위 미수령 신고 억제를 위한 증 거 검증 및 단계적 제재 시스템 설계</span><span class="pub-meta">2026년 KIIS&amp;SDPM 공동학술대회논문집 · 공동(참여) · 2026.07</span></li>
+                    <li><span class="pub-title">능동 진동 액추에이터 기반 착용형 어깨 부하 저감시스템의 가능성 및 한계 분석</span><span class="pub-meta">2026년 KIIS&amp;SDPM 공동학술대회논문집 · 공동(교신) · 2026.07</span></li>
+                    <li><span class="pub-title">Large-Scale Time-Series Data Migration from MongoDB to InfluxDB Using Go-Based Parallel Ingestion</span><span class="pub-meta">AIT 2026 · 공동(제1) · 2026.01</span></li>
+                </ol>
+                </details>
+            </div>
+        </article>
+
+        <div class="faculty-top">
+            <div class="members">
+                <article class="member">
+                    <div class="avatar" aria-hidden="true">U.R.</div>
+                    <div class="faculty-heading">
+                        <p class="role">Undergraduate Researcher · Lab Member</p>
+                        <h3>이수현</h3><p class="member-label">관심 연구 분야</p><ul><li>AI 기반 이상탐지 및 고장 진단</li><li>지능형 임베디드·실시간 시스템</li><li>산업용·차량용 통신</li></ul>
+                    </div>
+                </article>
+                <article class="member">
+                    <div class="avatar" aria-hidden="true">U.R.</div>
+                    <div class="faculty-heading">
+                        <p class="role">Undergraduate Researcher · Lab Member</p>
+                        <h3>박수빈</h3><p class="member-label">관심 연구 분야</p><ul><li>AI 기반 이상탐지 및 고장 진단</li><li>사이버 공격 분석 및 침입탐지</li><li>자율주행·커넥티드카 보안</li></ul>
+                    </div>
+                </article>
+                <article class="member">
+                        <div class="avatar" aria-hidden="true">U.R.</div>
+                        <div class="faculty-heading">
+                            <p class="role">Undergraduate Researcher · Lab Member</p>
+                            <h3>심규현</h3><p class="member-label">관심 연구 분야</p><ul><li>AI 기반 이상탐지 및 고장 진단</li><li>지능형 임베디드·실시간 시스템</li><li>시스템 안전성 및 신뢰성</li></ul>
+                        </div>
+                </article>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="section vision" id="vision" aria-labelledby="vision-title">
+      <div class="container">
+        <div class="section-head"><div class="eyebrow">Our Vision</div><h2 id="vision-title">연구 목표 및 응용 분야</h2><p>지능형·고신뢰·고보안 CPS 핵심 기술 개발</p></div>
+        <p class="vision-lead">사이버 공격과 시스템 결함에 대응할 수 있는 안전하고 신뢰성 높은 지능형 시스템을 개발하고, 스마트 제조·산업 자동화·산업용 IoT·지능형 모니터링·스마트 모빌리티·자율주행 및 커넥티드카·고신뢰 컴퓨팅 시스템 등 다양한 산업 분야에 적용하는 것을 목표로 합니다.</p>
+        <div class="tags"><span class="tag">스마트 제조</span><span class="tag">산업 자동화</span><span class="tag">산업용 IoT</span><span class="tag">지능형 모니터링</span><span class="tag">스마트 모빌리티</span><span class="tag">자율주행</span><span class="tag">커넥티드카</span><span class="tag">고신뢰 컴퓨팅</span></div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="container footer-inner"><div><strong>IR-CPS Lab</strong><span class="footer-sub">지능형 고신뢰 사이버물리시스템 연구실</span></div><span>© <span id="year">2026</span> IR-CPS Lab. All rights reserved.</span></div></footer>
+  <script>
+    const button = document.getElementById('menu-btn');
+    const nav = document.getElementById('site-nav');
+    button.addEventListener('click', () => { const isOpen = nav.classList.toggle('open'); button.setAttribute('aria-expanded', String(isOpen)); });
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { nav.classList.remove('open'); button.setAttribute('aria-expanded', 'false'); }));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
